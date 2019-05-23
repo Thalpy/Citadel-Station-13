@@ -50,6 +50,8 @@
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
 #define TRAIT_MINDSHIELD		"mindshield"
+#define TRAIT_FEARLESS			"fearless"
+#define TRAIT_UNSTABLE			"unstable"
 
 
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
@@ -71,6 +73,7 @@
 #define	TRAIT_MUSICIAN			"musician"
 #define	TRAIT_CROCRIN_IMMUNE    "crocin_immune"
 #define TRAIT_NYMPHO			"nymphomania"
+#define	TRAIT_HIGH_BLOOD    "high_blood"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"

@@ -33,6 +33,12 @@
 	var/addiction_stage4_end = 40
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
 	var/self_consuming = FALSE
+	//Fermichem vars:
+	var/purity = 1
+	var/addProc = FALSE //When this reagent is added to a new beaker, it does something.
+	//var/ImpureChem = "toxin"
+	var/loc = null //Should be the creation location!
+	var/pH = 7
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -126,3 +132,8 @@
 		rs += "[R.name], [R.volume]"
 
 	return rs.Join(" | ")
+/* MOVED TO CHEMICAL REACTION
+//Handler for explosion reaction
+/datum/reagents/proc/FermiExplode(turf/T, obj/O, mob/living/M, volume)
+	return
+*/

@@ -1,3 +1,5 @@
+#define TONGUE_MAX_HEALTH 50
+
 /obj/item/organ/tongue
 	name = "tongue"
 	desc = "A fleshy muscle mostly used for lying."
@@ -8,6 +10,8 @@
 	var/list/languages_possible
 	var/say_mod = null
 	var/taste_sensitivity = 15 // lower is more sensitive.
+	var/maxHealth = TONGUE_MAX_HEALTH
+	var/damage = 0
 	var/static/list/languages_possible_base = typecacheof(list(
 		/datum/language/common,
 		/datum/language/draconic,
@@ -29,6 +33,28 @@
 /obj/item/organ/tongue/proc/TongueSpeech(var/message)
 	return message
 
+/obj/item/organ/tongue/proc/adjustTongueLoss(mob/living/carbon/M, damage_mod)
+	if (maxHealth == "alien")
+		return
+	if (maxHealth == "bone")
+		var/target = M.get_bodypart(BODY_ZONE_HEAD)
+		M.apply_damage(damage_mod, BURN, target)
+		to_chat(M, "<span class='userdanger'>The drink burns your skull! Oof, your bones!</span>")
+		return
+	if(damage+damage_mod < 0)
+		damage = 0
+		return
+
+	damage += damage_mod
+	if ((damage / maxHealth) > 1)
+		to_chat(M, "<span class='userdanger'>Your tongue is singed beyond recognition, and disintegrates!</span>")
+		qdel(src)
+	else if ((damage / maxHealth) > 0.85)
+		to_chat(M, "<span class='warning'>Your tongue feels like it's about to fall out!.</span>")
+	else if ((damage / maxHealth) > 0.5)
+		to_chat(M, "<span class='notice'>Your tongue is really starting to hurt.</span>")
+
+
 /obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0)
 	..()
 	if(say_mod && M.dna && M.dna.species)
@@ -48,6 +74,7 @@
 	icon_state = "tonguelizard"
 	say_mod = "hisses"
 	taste_sensitivity = 10 // combined nose + tongue, extra sensitive
+	maxHealth = 35 //extra sensitivity means tongue is more susceptible to damage
 
 /obj/item/organ/tongue/lizard/TongueSpeech(var/message)
 	var/regex/lizard_hiss = new("s+", "g")
@@ -63,6 +90,7 @@
 	icon_state = "tonguefly"
 	say_mod = "buzzes"
 	taste_sensitivity = 25 // you eat vomit, this is a mercy
+	maxHealth = 80 //years of eatting trash has made your tongue strong
 
 /obj/item/organ/tongue/fly/TongueSpeech(var/message)
 	var/regex/fly_buzz = new("z+", "g")
@@ -78,6 +106,7 @@
 	icon_state = "tongueayylmao"
 	say_mod = "gibbers"
 	taste_sensitivity = 101 // ayys cannot taste anything.
+	maxHealth = 120 //Ayys probe a lot
 
 /obj/item/organ/tongue/abductor/TongueSpeech(var/message)
 	//Hacks
@@ -104,6 +133,7 @@
 	icon_state = "tonguezombie"
 	say_mod = "moans"
 	taste_sensitivity = 32
+	maxHealth = 60 //Stop! It's already dead...!
 
 /obj/item/organ/tongue/zombie/TongueSpeech(var/message)
 	var/list/message_list = splittext(message, " ")
@@ -127,6 +157,7 @@
 	icon_state = "tonguexeno"
 	say_mod = "hisses"
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
+	maxHealth = "alien"
 	var/static/list/languages_possible_alien = typecacheof(list(
 		/datum/language/xenocommon,
 		/datum/language/common,
@@ -149,6 +180,7 @@
 	say_mod = "rattles"
 	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
 	taste_sensitivity = 101 // skeletons cannot taste anything
+	maxHealth = "bone" //Take brute damage instead
 
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
@@ -178,6 +210,7 @@
 	name = "plasma bone \"tongue\""
 	desc = "Like animated skeletons, Plasmamen vibrate their teeth in order to produce speech."
 	icon_state = "tongueplasma"
+	maxHealth = "alien"
 
 /obj/item/organ/tongue/bone/plasmaman/get_spans()
 	return
@@ -190,9 +223,33 @@
 	say_mod = "states"
 	attack_verb = list("beeped", "booped")
 	taste_sensitivity = 25 // not as good as an organic tongue
+	maxHealth = 100 //RoboTongue!
 
 /obj/item/organ/tongue/robot/can_speak_in_language(datum/language/dt)
 	. = TRUE // THE MAGIC OF ELECTRONICS
 
 /obj/item/organ/tongue/robot/get_spans()
 	return ..() | SPAN_ROBOT
+
+//FermiChem
+/obj/item/organ/tongue/OwO
+	name = "fluffy tongue"
+	desc = "OwO what's this?"
+	icon_state = "tonguenormal"
+	taste_sensitivity = 10 // extra sensitive and inquisitive uwu
+	maxHealth = 35 //Sensitive tongue!
+
+/obj/item/organ/tongue/OwO/TongueSpeech(var/message)
+	if(copytext(message, 1, 2) != "*")
+		message = replacetext(message, "ne", "nye")
+		message = replacetext(message, "nu", "nyu")
+		message = replacetext(message, "na", "nya")
+		message = replacetext(message, "no", "nyo")
+		message = replacetext(message, "ove", "uv")
+		//message = replacetext(message, "th", "ff") //too incoherent in practice
+		message = replacetext(message, "l", "w")
+		message = replacetext(message, "r", "w")
+	if(prob(20))
+		message +=  pick(" OwO", " uwu")
+	message = lowertext(message)
+	return message
