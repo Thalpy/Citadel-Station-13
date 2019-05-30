@@ -1483,3 +1483,33 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	playsound(get_turf(holder.my_atom), 'sound/FermiChem/bufferadd.ogg', 50, 1)
 	holder.remove_reagent(src.id, src.volume)
 	..()
+
+/datum/reagent/fermi/equlibrium1
+	name = "Equlibrium test 1"
+	id = "equlibrium1"
+	description = "This is a test"
+
+/datum/reagent/fermi/equlibrium2
+	name = "Equlibrium test 2"
+	id = "equlibrium2"
+	description = "This is a test"
+
+/datum/reagent/fermi/equlibrium3
+	name = "Equlibrium test 3"
+	id = "equlibrium3"
+	description = "This is a test"
+
+/datum/reagent/fermi/Fequlibrium1
+	name = "Failed Equlibrium test 2"//defined on setup
+	id = "Fequlibrium1"
+	description = "This is a test"
+
+/datum/reagent/fermi/Fequlibrium2
+	name = "Failed Equlibrium test 2"//defined on setup
+	id = "Fequlibrium2"
+	description = "This is a test"
+
+/datum/reagent/fermi/equlibrium4
+	name = "Equlibrium test 4"//defined on setup
+	id = "equlibrium4"
+	description = "This is a test"

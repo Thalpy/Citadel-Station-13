@@ -406,3 +406,145 @@
 /datum/chemical_reaction/fermi/fermiBBuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
 	var/datum/reagent/fermi/fermiBBuffer/Fb = locate(/datum/reagent/fermi/fermiBBuffer) in my_atom.reagents.reagent_list
 	Fb.data = 11
+
+//This has to be set up so multiple reactions can occur at once.
+
+/datum/chemical_reaction/fermi/equlibrium1
+	name = "Equlibrium test 1"
+	id = "equlibrium1"
+	results = list("equlibrium1" = 1.5)
+	required_reagents = list("water" = 0.5, "ethanol" = 0.5, "water" = 0.5)
+	//FermiChem vars:
+	OptimalTempMin 	= 400
+	OptimalTempMax 	= 600
+	ExplodeTemp 	= 800 //check to see overflow doesn't happen!
+	OptimalpHMin 	= 6
+	OptimalpHMax 	= 8
+	ReactpHLim 		= 2
+	//CatalystFact 	= 0 //To do 1
+	CurveSharpT 	= 1
+	CurveSharppH 	= 1
+	ThermicConstant = 0
+	HIonRelease 	= -0.05
+	RateUpLim 		= 3
+	FermiChem 		= TRUE
+
+/datum/chemical_reaction/fermi/equlibrium2
+	name = "Equlibrium test 2"
+	id = "equlibrium2"
+	results = list("equlibrium1" = 0.1)
+	required_reagents = list("equlibrium2" = 0.1)
+	//FermiChem vars:
+	OptimalTempMin 	= 400
+	OptimalTempMax 	= 600
+	ExplodeTemp 	= 800 //check to see overflow doesn't happen!
+	OptimalpHMin 	= 6
+	OptimalpHMax 	= 8
+	ReactpHLim 		= 2
+	//CatalystFact 	= 0 //To do 1
+	CurveSharpT 	= 1
+	CurveSharppH 	= 1
+	ThermicConstant = 0
+	HIonRelease 	= -0.05
+	RateUpLim 		= 1.5
+	FermiChem 		= TRUE
+
+/datum/chemical_reaction/fermi/equlibrium22
+	name = "Equlibrium test 22"
+	id = "equlibrium22"
+	results = list("equlibrium2" = 0.1)
+	required_reagents = list("equlibrium1" = 0.1)
+	//FermiChem vars:
+	OptimalTempMin 	= 400
+	OptimalTempMax 	= 600
+	ExplodeTemp 	= 800 //check to see overflow doesn't happen!
+	OptimalpHMin 	= 6
+	OptimalpHMax 	= 8
+	ReactpHLim 		= 2
+	//CatalystFact 	= 0 //To do 1
+	CurveSharpT 	= 1
+	CurveSharppH 	= 1
+	ThermicConstant = 0
+	HIonRelease 	= -0.05
+	RateUpLim 		= 1.5
+	FermiChem 		= TRUE
+
+/datum/chemical_reaction/fermi/equlibrium3
+	name = "Equlibrium test 3"
+	id = "equlibrium3"
+	results = list("equlibrium3" = 0.1)
+	required_reagents = list("equlibrium2" = 0.1)
+	//FermiChem vars:
+	OptimalTempMin 	= 460
+	OptimalTempMax 	= 600
+	ExplodeTemp 	= 800 //check to see overflow doesn't happen!
+	OptimalpHMin 	= 6
+	OptimalpHMax 	= 8
+	ReactpHLim 		= 2
+	//CatalystFact 	= 0 //To do 1
+	CurveSharpT 	= 0.5
+	CurveSharppH 	= 1
+	ThermicConstant = 0
+	HIonRelease 	= -0.05
+	RateUpLim 		= 1.5
+	FermiChem 		= TRUE
+
+/datum/chemical_reaction/fermi/Fequlibrium1
+	name = "FEqulibrium test 1"
+	id = "Fequlibrium1"
+	results = list("Fequlibrium1" = 0.1)
+	required_reagents = list("equlibrium3" = 0.1)
+	//FermiChem vars:
+	OptimalTempMin 	= 460
+	OptimalTempMax 	= 600
+	ExplodeTemp 	= 800 //check to see overflow doesn't happen!
+	OptimalpHMin 	= 4
+	OptimalpHMax 	= 6
+	ReactpHLim 		= 0
+	//CatalystFact 	= 0 //To do 1
+	CurveSharpT 	= 1
+	CurveSharppH 	= 0
+	ThermicConstant = 0
+	HIonRelease 	= -0.05
+	RateUpLim 		= 0.5
+	FermiChem 		= TRUE
+
+/datum/chemical_reaction/fermi/Fequlibrium2
+	name = "FEqulibrium test 2"
+	id = "Fequlibrium2"
+	results = list("Fequlibrium2" = 0.1)
+	required_reagents = list("equlibrium4" = 0.1)
+	//FermiChem vars:
+	OptimalTempMin 	= 400
+	OptimalTempMax 	= 600
+	ExplodeTemp 	= 800 //check to see overflow doesn't happen!
+	OptimalpHMin 	= 4
+	OptimalpHMax 	= 8
+	ReactpHLim 		= 2
+	//CatalystFact 	= 0 //To do 1
+	CurveSharpT 	= 2
+	CurveSharppH 	= 0
+	ThermicConstant = 0
+	HIonRelease 	= -0.05
+	RateUpLim 		= 0.5
+	FermiChem 		= TRUE
+
+/datum/chemical_reaction/fermi/equlibrium4
+	name = "Equlibrium test 4"
+	id = "equlibrium4"
+	results = list("equlibrium4" = 0.1)
+	required_reagents = list("equlibrium3" = 0.1)
+	//FermiChem vars:
+	OptimalTempMin 	= 460
+	OptimalTempMax 	= 600
+	ExplodeTemp 	= 800 //check to see overflow doesn't happen!
+	OptimalpHMin 	= 6
+	OptimalpHMax 	= 8
+	ReactpHLim 		= 0
+	//CatalystFact 	= 0 //To do 1
+	CurveSharpT 	= 1
+	CurveSharppH 	= 0
+	ThermicConstant = 0
+	HIonRelease 	= -0.05
+	RateUpLim 		= 0.5
+	FermiChem 		= TRUE
