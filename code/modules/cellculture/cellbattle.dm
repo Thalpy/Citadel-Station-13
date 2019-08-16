@@ -15,7 +15,7 @@
     var/RNG = rand(0, 1, 0.01)
     var/cached_luck = C.luck/5
 
-    //lucky organs get 2 rolls
+    //lucky organs get multi rolls
     while(cached_luck>1)
         var/tRNG = rand(0, 1, 0.01)
         if(tRNG > RNG)
@@ -24,7 +24,14 @@
 
     return RNG
 
-/obj/culture/proc/attack(var/obj/culture/target)
+/obj/culture/proc/adjust_fatique(var/amount)
+    fatique += amount
+    if(fatique > 20)
+        fatique = 20
+        return TRUE
+    return FALSE
+
+/obj/culture/proc/attack(var/obj/culture/target)//Calculate damage
     RNG = RNGCalc(src)
 
     //Just in case
@@ -53,9 +60,19 @@
 
             damage = (0.8 + (current_turn / 10) * charisma * ((luck / 5) * RNG))
 
-        damage = damage * (fatique/20)//
+    //being tired makes you do less damage
+    damage = damage * (fatique/20)
 
-/obj/culture/proc/defend(var/obj/culture/attacker, var/damage, var/accuracy)
+
+    if(RNGCalc >= 0.95)
+        if(favouredStat == "strength")
+            damage *= 2
+        else
+            damage *= 1.5
+
+    return damage
+
+/obj/culture/proc/defend(var/obj/culture/attacker, var/damage, var/accuracy) //Calculate received damage and dodge chance
     RNG = RNGCalc(src)
 
     if(favouredStat == "intelligence")
@@ -63,17 +80,29 @@
             combat_message = "[src] foresee's [attacker]'s attack, and dodges!'"
             return FALSE
 
+    //dodge checks
     var/dodge = (agility * ((luck / 5) * RNG)))/2
-    if(favouredStat == "agility")
+    if(favouredStat == "agility")//Agile organs have higher dodge
         dodge *= 1.2
     if(dodge > accuracy)
         combat_message = "[src] dances majestically around [attacker]'s attack, and dodges!'"
         return FALSE
 
-    var/defence = (strength * ((luck / 5) * RNG)))/2
-    if(favouredStat == "strength")
+    //defence calcs
+    var/defence = (strength * ((luck / 5) * RNG)))
+    if(favouredStat == "strength") //Strengths have higher defence
         defence *= 1.2
-    if(favouredStat == "charisma")
+
+    //Armor pen (flat int)
+    var/armorPen = defence/100
+    if(attacker.favouredStat == "intelligence")
+        armorPen = armorPen * ((accuracy * attacker.intelligence))
+    else
+        armorPen = armorPen * ((accuracy * attacker.intelligence)/1.3)
+    defence -= armorPen
+
+    //Charisma deminishes over time
+    else if(favouredStat == "charisma")
         damage /= (1 - (current_turn / 20))
     damage = damage - defence
     if(damage < 0)
@@ -81,6 +110,41 @@
         return FALSE
 
     return damage
+
+
+
+/obj/culture/proc/prep_spell(var/spell1, var/spell2)
+    //charisma gets 2 spells at once
+    //incase of no spells picked (say a nother spell causes this) 2 are picked randomly from the avalible
+    if(!spell1)
+        spell1 = pick(trait)
+    if(!spell2 && favouredStat == "charisma")
+        spell2 = pick(trait)
+
+    //spell power calculations are flat for now, maybe I'll make it more int dependant based on balance/meta
+    var/spellPower = 1
+    if(favouredStat == "intelligence")
+        spellPower = 1.5
+    spellPower += RNGCalc(src)
+    cast_spell(spell, spellPower)
+
+    //Agile organs incurr less fatique
+    if(favouredStat == "agility")
+        adjust_fatique(2.5)
+    else
+        adjust_fatique(4)
+
+    //cast the spell, or both, if charismatic
+    cast_spell(spell1)
+    if(favouredStat == "charisma")
+        cast_spell(spell2)
+
+
+
+
+/obj/culture/proc/cast_spell(spell, var/spellPower, var/obj/culture/target)
+
+    //Probabbly just make the traits themselves run a script
 
 
 /obj/culture/proc/determinePrimaryStat()//Lemme know if theres a better way to do this
