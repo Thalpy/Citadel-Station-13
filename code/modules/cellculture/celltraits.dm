@@ -36,8 +36,8 @@ datum/culture_traits/alcoholic/spell(obj/culture/self, obj/culture/target, spell
         return
 
     if(target.type == "liver")
-        damage *= 1.2
+        spellPower *= 1.2
 
-    damage /= 5
+    spellPower /= 5
     target.status_effects["poison"] += spellPower
     self.to_local_chat("[target] takes a sip of the drink, oof, they're a bit of a lightweight!")
