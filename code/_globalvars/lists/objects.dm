@@ -16,6 +16,8 @@ GLOBAL_LIST_EMPTY(singularities)				    //list of all singularities on the stati
 
 GLOBAL_LIST(chemical_reactions_list)				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 GLOBAL_LIST(chemical_reagents_list)				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
+GLOBAL_LIST(tamiorgan_list)                     //list of all the /datum/culture tamigotchi organs
+GLOBAL_LIST(tamitraits_list)                     //list of all the /datum/culture_traits tamigotchi organs traits
 GLOBAL_LIST_EMPTY(materials_list)				//list of all /datum/material datums indexed by material id.
 GLOBAL_LIST_EMPTY(tech_list)					//list of all /datum/tech datums indexed by id.
 GLOBAL_LIST_EMPTY(surgeries_list)				//list of all surgeries by name, associated with their path.

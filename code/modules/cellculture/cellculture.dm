@@ -7,6 +7,7 @@
 #define C_ADULT 5
 
 /obj/culture
+    var/maxHealth = 50
     var/health = 50
     var/happiness = 50
     var/intelligence = 0
@@ -30,4 +31,21 @@
 	. = ..()
 	create_reagents(50)//For heat and feeding
 
+    reagents = new/datum/reagents(max_vol, flags)
+	reagents.my_atom = src
+    var/datum/thing
+
+/obj/culture/proc/has_cell_trait(datum/culture_traits/Ct)
+    for(var/datum/culture_trait/trait in traits)
+        if(Ct == trait)
+            return TRUE
+    return FALSE
+
+/obj/culture/proc/to_local_chat(words)
+    var/list/seen = viewers(7, get_turf(src))
+    var/iconhtml = icon2html(src, seen)
+    for(var/mob/M in seen)
+        to_chat(M, "<span class='notice'>[iconhtml] [words]</span>")
+
 /obj/culture/process()
+    //do the thing! thanks

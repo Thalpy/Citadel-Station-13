@@ -1,3 +1,4 @@
+#define FRIENDLY_THRESHOLD 50
 //Battle code
 /obj/culture/proc/prepBattle()
     favouredStat = determinePrimaryStat()
@@ -5,35 +6,57 @@
 
 /obj/culture/proc/Battle()
     var/current_turn = 1
+    var/friendliness = 0
     var/RNG
     var/combat_message
+    var/status_effects = list()
     inGloriousCombat = TRUE
 
     prepBattle()
 
-/obj/culture/proc/RNGCalc(var/obj/culture/C)
+//Helper functions
+//Find the largest stat
+/obj/culture/proc/determinePrimaryStat()//Lemme know if theres a better way to do this
+    if(strength == max(list(strength, intelligence, agility, charisma))
+        return "strength"
+    if(intelligence == max(list(strength, intelligence, agility, charisma))
+        return "intelligence"
+    if(agility == max(list(strength, intelligence, agility, charisma))
+        return "agility"
+    if(charisma == max(list(strength, intelligence, agility, charisma))
+        return "charisma"
+    return FALSE
+
+//calc randomness
+/obj/culture/proc/RNGCalc(obj/culture/C)
     var/RNG = rand(0, 1, 0.01)
     var/cached_luck = C.luck/5
-
     //lucky organs get multi rolls
     while(cached_luck>1)
         var/tRNG = rand(0, 1, 0.01)
         if(tRNG > RNG)
             RNG = tRNG
         cached_luck -= 1
-
     return RNG
 
-/obj/culture/proc/adjust_fatique(var/amount)
+//limit fatique
+/obj/culture/proc/adjust_fatique(amount)
     fatique += amount
     if(fatique > 20)
         fatique = 20
         return TRUE
     return FALSE
 
-/obj/culture/proc/attack(var/obj/culture/target)//Calculate damage
-    RNG = RNGCalc(src)
+/obj/culture/proc/process_statuses()
+    if(!LAZYLEN(status_effects))
+        return
+    for(var/status in status_effects)
+        switch(status)
+            if("poison")
+                deal_damage(status_effects[status])
 
+/obj/culture/proc/damage_calc(obj/culture/target)//Calculate damage
+    RNG = RNGCalc(src)
     //Just in case
     if(!favouredStat)
         favouredStat = determinePrimaryStat()
@@ -64,15 +87,14 @@
     damage = damage * (fatique/20)
 
 
-    if(RNGCalc >= 0.95)
+    if(RNGCalc >= 0.95)//Crits!
         if(favouredStat == "strength")
             damage *= 2
         else
             damage *= 1.5
-
     return damage
 
-/obj/culture/proc/defend(var/obj/culture/attacker, var/damage, var/accuracy) //Calculate received damage and dodge chance
+/obj/culture/proc/defend(obj/culture/attacker, damage, accuracy) //Calculate received damage and dodge chance
     RNG = RNGCalc(src)
 
     if(favouredStat == "intelligence")
@@ -109,11 +131,30 @@
         combat_message = "[src] blocks [attacker]'s attack!'"
         return FALSE
 
+    //end
     return damage
 
+/obj/culture/proc/deal_damage(amount)
+    health -= amount
+    to_local_chat("[name] takes [amount] damage!")
+    if(health < 0)
+        defeat()
+
+/obj/culture/proc/heal(amount)
+    health += amount
+    to_local_chat("[name] heals for [amount]!")
+    if(health > maxHealth)
+        health = maxHealth
+
+/obj/culture/proc/friendly_damage(amount)
+    friendliness += amount
+    to_local_chat("[name] is swayed by [amount]!")
+    if(friendliness > FRIENDLY_THRESHOLD)
+        make_friends()
+        return
 
 
-/obj/culture/proc/prep_spell(var/spell1, var/spell2)
+/obj/culture/proc/prep_spell(datum/culture_traits/spell1, datum/culture_traits/spell2, obj/culture/target)
     //charisma gets 2 spells at once
     //incase of no spells picked (say a nother spell causes this) 2 are picked randomly from the avalible
     if(!spell1)
@@ -135,9 +176,9 @@
         adjust_fatique(4)
 
     //cast the spell, or both, if charismatic
-    cast_spell(spell1)
+    spell1.spell(src, target)
     if(favouredStat == "charisma")
-        cast_spell(spell2)
+        spell2.spell(src, target)
 
 
 
@@ -145,15 +186,3 @@
 /obj/culture/proc/cast_spell(spell, var/spellPower, var/obj/culture/target)
 
     //Probabbly just make the traits themselves run a script
-
-
-/obj/culture/proc/determinePrimaryStat()//Lemme know if theres a better way to do this
-    if(strength == max(list(strength, intelligence, agility, charisma))
-        return "strength"
-    if(intelligence == max(list(strength, intelligence, agility, charisma))
-        return "intelligence"
-    if(agility == max(list(strength, intelligence, agility, charisma))
-        return "agility"
-    if(charisma == max(list(strength, intelligence, agility, charisma))
-        return "charisma"
-    return FALSE
