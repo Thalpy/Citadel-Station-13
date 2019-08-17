@@ -55,7 +55,7 @@
             if("poison")
                 deal_damage(status_effects[status])
 
-/obj/culture/proc/damage_calc(obj/culture/target)//Calculate damage
+/obj/culture/proc/damage_calc(obj/culture/target, baseMod = 1)//Calculate damage
     RNG = RNGCalc(src)
     //Just in case
     if(!favouredStat)
@@ -84,7 +84,8 @@
             damage = (0.8 + (current_turn / 10) * charisma * ((luck / 5) * RNG))
 
     //being tired makes you do less damage
-    damage = damage * (fatique/20)
+    damage *= baseMod
+    damage *= (fatique/20)
 
 
     if(RNGCalc >= 0.95)//Crits!
@@ -167,7 +168,6 @@
     if(favouredStat == "intelligence")
         spellPower = 1.5
     spellPower += RNGCalc(src)
-    cast_spell(spell, spellPower)
 
     //Agile organs incurr less fatique
     if(favouredStat == "agility")
@@ -176,9 +176,9 @@
         adjust_fatique(4)
 
     //cast the spell, or both, if charismatic
-    spell1.spell(src, target)
+    spell1.spell(src, target, spellPower)
     if(favouredStat == "charisma")
-        spell2.spell(src, target)
+        spell2.spell(src, target, spellPower)
 
 
 
