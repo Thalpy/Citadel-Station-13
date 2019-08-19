@@ -21,6 +21,8 @@
     var/name = "Humsquanch babnorp"
     var/age = C_BABY
     var/type = "Stem cells"
+    //datums
+    /datum/culture
     //Combat vars
     var/cached_stats
     var/favouredStat

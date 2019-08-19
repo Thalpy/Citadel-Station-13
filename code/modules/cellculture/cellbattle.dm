@@ -47,6 +47,7 @@
         return TRUE
     return FALSE
 
+//Process them statues ey!
 /obj/culture/proc/process_statuses()
     if(!LAZYLEN(status_effects))
         return
@@ -80,13 +81,11 @@
                 multihitC++
 
         if("charisma")//Charisma gains strength over the battle
-
             damage = (0.8 + (current_turn / 10) * charisma * ((luck / 5) * RNG))
 
     //being tired makes you do less damage
     damage *= baseMod
     damage *= (fatique/20)
-
 
     if(RNGCalc >= 0.95)//Crits!
         if(favouredStat == "strength")
@@ -155,6 +154,7 @@
         return
 
 
+
 /obj/culture/proc/prep_spell(datum/culture_traits/spell1, datum/culture_traits/spell2, obj/culture/target)
     //charisma gets 2 spells at once
     //incase of no spells picked (say a nother spell causes this) 2 are picked randomly from the avalible
@@ -186,3 +186,4 @@
 /obj/culture/proc/cast_spell(spell, var/spellPower, var/obj/culture/target)
 
     //Probabbly just make the traits themselves run a script
+    //yeah thats what I did

@@ -12,6 +12,8 @@
 	//Was this organ implanted/inserted/etc, if true will not be removed during species change.
 	var/external = FALSE
 	var/synthetic = FALSE // To distinguish between organic and synthetic organs
+	//tamiorgans
+	var/datum/culture/tamiorgan //if grafted or grown
 
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
@@ -30,6 +32,10 @@
 	M.internal_organs |= src
 	M.internal_organs_slot[slot] = src
 	moveToNullspace()
+
+	if(tamiorgan)
+		tamiorgan.on_insertion(M, tamiorgan)
+
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)
@@ -43,6 +49,10 @@
 			M.internal_organs_slot.Remove(slot)
 		if(vital && !special && !(M.status_flags & GODMODE))
 			M.death()
+
+	if(tamiorgan)
+		tamiorgan.on_removal(M, tamiorgan)
+
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(M)
@@ -52,6 +62,8 @@
 	return
 
 /obj/item/organ/proc/on_life()
+	if(tamiorgan)
+		tamiorgan.life_tick(owner, src)
 	return
 
 /obj/item/organ/examine(mob/user)

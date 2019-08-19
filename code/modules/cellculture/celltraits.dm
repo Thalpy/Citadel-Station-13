@@ -12,32 +12,51 @@
         GLOB.tamitrait_list[path] = D
 
 
-datum/culture_traits
+/datum/culture_traits
     var/name
+    var/randomlyAquired = TRUE
+    var/requiredStats
 
-datum/culture_traits/New()
+
+/datum/culture_traits/New()
     build_tamitraits_list()
 
-datum/culture_traits/proc/spell(obj/culture/self, obj/culture/target)
+/datum/culture_traits/proc/spell(obj/culture/self, obj/culture/target)//Spells used in combat
+
+/datum/culture_traits/proc/on_growth(obj/culture/self)//When an organ advances in age TODO
+
+/datum/culture_traits/proc/growth_tick(obj/culture/self)//For each processing tick TODO
+
+/datum/culture_traits/proc/on_gain(obj/culture/self)//When a trait is added to a tamiorgan TODO
+
+/datum/culture_traits/proc/on_removal(obj/culture/self)//When a trait is removed from a tamiorgan TODO
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-datum/culture_traits/alcoholic
+/datum/culture_traits/alcoholic
     name = "alcoholic"
+    randomlyAquired = FALSE
 
-datum/culture_traits/alcoholic/spell(obj/culture/self, obj/culture/target, spellPower)
+/datum/culture_traits/alcoholic/spell(obj/culture/self, obj/culture/target, spellPower)
     self.to_local_chat("[self] offers [target] a drink!")
 
     if(target.has_cell_trait(datum/culture_traits/alcoholic))
         target.heal(spellPower)
         target.friendly_damage(spellPower)
         self.to_local_chat("The two organs bond together from their love of alcohol.")
+        self.happiness++
+        target.happiness++
         return
 
-    if(target.type == "liver")
+    if(target.type == "liver" && target.status_effects["drunk"])
         spellPower *= 1.2
 
-    spellPower /= 5
-    target.status_effects["poison"] += spellPower
-    self.to_local_chat("[target] takes a sip of the drink, oof, they're a bit of a lightweight!")
+    if(target.status_effects["drunk"] >= 3)
+        spellPower /= 5
+        target.status_effects["poison"] = (target.status_effects["poison"]? (target.status_effects["poison"] + (spellPower/2)) : spellPower)
+        self.to_local_chat("[target] takes another drink, and stumbles, goodness, they're smashed!")
+        return
+
+    else
+        target.status_effects["drunk"] + 1
