@@ -14,7 +14,7 @@
 
 /datum/culture_traits
     var/name
-    var/randomlyAquired = TRUE
+    var/randomlyAcquired = TRUE
     var/requiredStats
 
 
