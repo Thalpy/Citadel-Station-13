@@ -1,9 +1,10 @@
 Lungs:
 fire lung - breathes fire
+chilled lungs - creates a few sheets of snow in your hand, common
 
 Heart:
 unwavering heart - when dead, keeps beating and slowly heals you. If you go over -100 health, you come back alive. Body visibly shakes during this process.
-maybe nick cursed heart
+maybe nick cursed heart [should probably leave cursed heart to lavaland but similar organs could be neat]
 
 Liver:
 psycho liver - action: injects a random reagent into you on a regenerative amount
@@ -21,15 +22,20 @@ iron stomach - can eat anything, and I mean anything.
 
 Eyes:
 x-ray lmao
+predator's eyes - gives you a toggle that turns on thermal vision but makes your vision red (think goggle colors) and deals eye damage that heals over time when not in use (think clockwork cult), rare
 
 Ears:
-
+hypersensitive ears - hear through walls and/or hear whispers at normal volume, common
+around-the-globe lobes - can understand every language HEARD, but cannot speak, read, or write them, uncommon
 
 Tails:
 helicopter tail - makes you run faster for a short time.
 Space movement
+hooktail - lets you shoot out a projectile that acts like meathook but doesn't deal any damage, common
 
 Tongue:
+chameleon tongue - allows you to shoot a tentacle-esk projectile that licks on hit and nothing else, common
 
 Trait effects:
 Needy - Can't be removed
+Bloodthirsty - Slightly lowers your maximum blood capacity, but also slightly increases your natural blood regen rate. Stacks with other bloodthirsty organs. Also deals slightly more damage in cell combat.
