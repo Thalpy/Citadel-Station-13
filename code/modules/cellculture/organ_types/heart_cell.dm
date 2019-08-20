@@ -14,7 +14,7 @@
     C.maxHealth += 10
     ..()
 
-/datum/culture/heart/hardened/on_removalmob/living/carbon/human/body, obj/culture/target)
+/datum/culture/heart/hardened/on_removal(mob/living/carbon/human/body, obj/culture/target)
     REMOVE_TRAIT(body, TRAIT_ANTIMAGIC, "dwarf_heart")
     REMOVE_TRAIT(body, TRAIT_NOCLONE, "dwarf_heart")
     C.dna.remove_mutation(DWARFISM)
