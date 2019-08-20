@@ -87,15 +87,15 @@
                 continue
 
         //Check stats vs potential
-        if(candidate.minSTR > C.strength)
+        if(candidate.minSTR <= C.strength)
             continue
-        if(candidate.minINT > C.intelligence)
+        if(candidate.minINT <= C.intelligence)
             continue
-        if(candidate.minAGIL > C.agility)
+        if(candidate.minAGIL <= C.agility)
             continue
-        if(candidate.minCHAR > C.charisma)
+        if(candidate.minCHAR <= C.charisma)
             continue
-        if(candidate.minLUCK > C.luck)
+        if(candidate.minLUCK <= C.luck)
             continue
 
         //check traits
