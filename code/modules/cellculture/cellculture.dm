@@ -43,11 +43,49 @@
             return TRUE
     return FALSE
 
-/obj/culture/proc/to_local_chat(words)
+/obj/culture/proc/to_local_chat(words)//Displays a lil cute organ to everyone in a 7 tile square diameter
     var/list/seen = viewers(7, get_turf(src))
     var/iconhtml = icon2html(src, seen)
     for(var/mob/M in seen)
         to_chat(M, "<span class='notice'>[iconhtml] [words]</span>")
+
+//simple check to make sure it doesn't go below 0
+/obj/culture/proc/adjust_cell_stats(amount, type)
+    switch(type)
+
+        if("strength")
+            strength += amount
+            if(strength < 0)
+                strength = 0
+            return TRUE
+
+        if("intelligence")
+            intelligence += amount
+            if(intelligence < 0)
+                intelligence = 0
+            return TRUE
+
+        if("agility")
+            agility += amount
+            if(agility < 0)
+                agility = 0
+            return TRUE
+
+        if("charisma")
+            charisma += amount
+            if(charisma < 0)
+                charisma = 0
+            return TRUE
+
+        if("luck")
+            luck += amount
+            if(luck < 0)
+                luck = 0
+            return TRUE
+
+    stack_trace("TAMIORGANS: Tried to modify a non existant stat: [type]!")
+    return FALSE
+
 
 /obj/culture/process()
     //do the thing! thanks

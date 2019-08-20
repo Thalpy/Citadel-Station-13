@@ -37,11 +37,15 @@
     var/rarity = COMMON //How rare something is, COMMON, UNCOMMON or RARE
     var/list/datum/culture/culture_list = new/list() //I honestly forgot what this is for? I don't think I use it. Consider removal upon final review.
     var/actions_types //eg; list(/datum/action/item_action/organ_action/cursed_heart)
+    var/merge_text = "You feel the stem cells merge with your body!"
+    var/remove_text = "You feel like some cells have left you, you feel strangely hollow."
 
 /datum/culture/New()
     build_tamiorgan_list()
 
 /datum/culture/proc/on_insertion(mob/living/carbon/human/body, obj/culture/target) //When inserted into a human
+    //TODO figure out grafting code
+    to_chat(body, "[merge_text]")
 
 /datum/culture/proc/life_tick(mob/living/carbon/human/body, obj/culture/target)//procs every life tick
 
@@ -55,6 +59,7 @@
 //datum/action/item_action/organ_action/example/Trigger()
 
 /datum/culture/proc/on_removal(mob/living/carbon/human/body, obj/culture/target) //When removed from a human
+    to_chat(body, "[remove_text]")
 
 //needs testing
 //used to figure out what a growing tamiorgan will become.

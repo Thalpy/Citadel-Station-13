@@ -25,7 +25,7 @@
 
 /datum/culture_traits/proc/on_growth(obj/culture/self)//When an organ advances in age TODO
 
-/datum/culture_traits/proc/growth_tick(obj/culture/self)//For each processing tick TODO
+/datum/culture_traits/proc/life_tick(obj/culture/self)//For each processing tick TODO
 
 /datum/culture_traits/proc/on_gain(obj/culture/self)//When a trait is added to a tamiorgan TODO
 
@@ -60,3 +60,11 @@
 
     else
         target.status_effects["drunk"] + 1
+
+/datum/culture_traits/alcoholic/on_gain(obj/culture/self)
+    self.adjust_cell_stats(-1, "intelligence")
+
+/datum/culture_traits/alcoholic/on_removal(obj/culture/self)
+    self.adjust_cell_stats(1, "intelligence")
+
+/datum/culture_traits/alcoholic/life_tick(obj/culture/self)
