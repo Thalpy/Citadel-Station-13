@@ -35,10 +35,13 @@ hooktail - lets you shoot out a projectile that acts like meathook but doesn't d
 
 Tongue:
 chameleon tongue - allows you to shoot a tentacle-esk projectile that licks on hit and nothing else, common
+wise tongue - whenever you ingest a chemical, you know what you ingested. for example, drink out of an unlabelled beaker and you get a subtle message saying it's mannitol, rare
 
 Trait effects:
 Needy - Can't be removed
 Bloodthirsty - Slightly lowers your maximum blood capacity, but also slightly increases your natural blood regen rate. Stacks with other bloodthirsty organs. Also deals slightly more damage in cell combat.
+Social - Whispers small sentences. Can be anywhere from cute to very creepy depending on what's said.
 
-Cargo crates:
-Tamagotchi Crate - moderately pricey crate that contains a starter kit for your very own cell culture tamagotchi. wouldn't have much equipment but would have the basics so assistants could make their own cultures to fight in medbay tournaments
+MISC:
+Tamagotchi Crate - moderately pricey crate that contains a starter kit for your very own cell culture tamagotchi. Wouldn't have advanced equipment but could let an assistant keep a culture just for tamagotchi reasons, and maybe get a common organ if they spend long enough on it
+Organ Sets - multiple organs with the same theme, possibly adds new effects if you have multiple of a set
