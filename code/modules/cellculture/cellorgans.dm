@@ -109,7 +109,7 @@
             possible_tamiorgans += candidate
 
     if(!possible_tamiorgans)
-        return
+        return FALSE
 
     //create a weighted list of rarities
     var/list/possible_rarity_tamiorgans
