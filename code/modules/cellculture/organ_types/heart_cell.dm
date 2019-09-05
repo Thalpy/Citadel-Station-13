@@ -6,6 +6,7 @@
     rarity = UNCOMMON
     merge_text = "You feel a lot smaller, and like you've a few unsettled grudges."
     remove_text = "You think you can find it in your heart to forgive again."
+    age = C_ADULT
 
 /datum/culture/heart/dwarf/on_insertion(mob/living/carbon/human/body, obj/culture/target)
     ADD_TRAIT(body, TRAIT_ANTIMAGIC, "dwarf_heart")

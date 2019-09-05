@@ -3,8 +3,8 @@
 #define C_BABY 1
 #define C_YOUTH 2
 #define C_ADOLESENT 3
-#define C_YOUNG_ADULT 4
-#define C_ADULT 5
+#define C_ADULT 4
+#define C_SAGE 5
 
 /obj/culture
     var/maxHealth = 50
