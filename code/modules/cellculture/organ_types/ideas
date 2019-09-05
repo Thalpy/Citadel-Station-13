@@ -1,13 +1,15 @@
 Lungs:
 fire lung - breathes fire
+chilled lungs - creates a few sheets of snow in your hand, common
 
 Heart:
 unwavering heart - when dead, keeps beating and slowly heals you. If you go over -100 health, you come back alive. Body visibly shakes during this process.
-maybe nick cursed heart
+maybe nick cursed heart [should probably leave cursed heart to lavaland but similar organs could be neat]
 
 Liver:
 psycho liver - action: injects a random reagent into you on a regenerative amount
 alcoholic liver - removes any damage from alcohol
+slime liver - gives you toxinlover 
 
 Appendix:
 simplemob fighting organ - when you're in crit, an organ pops out of you (probably appendix?) and fights everyone but you!
@@ -19,11 +21,15 @@ EMP
 
 Stomach:
 iron stomach - can eat anything, and I mean anything.
+modern stomach - prevents you from gaining the fat status effect that gives slowdown, common
 
 Eyes:
 x-ray lmao
+predator's eyes - gives you a toggle that turns on thermal vision but makes your vision red (think goggle colors) and deals eye damage that heals over time when not in use (think clockwork cult), rare
 
 Ears:
+hypersensitive ears - hear through walls and/or hear whispers at normal volume, common
+around-the-globe lobes - can understand every language heard in person, but cannot speak, read, or write them, and don't understand if they're over radio, uncommon
 Hears ghost chat???
 HEARS ADMIN CHAT??
 Understands all languages
@@ -31,8 +37,21 @@ Understands all languages
 Tails:
 helicopter tail - makes you run faster for a short time.
 Space movement
+hooktail - lets you shoot out a projectile that acts like meathook but doesn't deal any damage, common
 
 Tongue:
+chameleon tongue - allows you to shoot a tentacle-esk projectile that licks on hit and nothing else, common
+wise tongue - whenever you ingest a chemical, you know what you ingested. for example, drink out of an unlabelled beaker and you get a subtle message saying it's mannitol, rare
+
+Trait effects:
+Needy - Can't be removed
+Bloodthirsty - Slightly lowers your maximum blood capacity, but also slightly increases your natural blood regen rate. Stacks with other bloodthirsty organs. Also deals slightly more damage in cell combat.
+Social - Whispers small sentences. Can be anywhere from cute to very creepy depending on what's said.
+
+MISC:
+Tamagotchi Crate - moderately pricey crate that contains a starter kit for your very own cell culture tamagotchi. Wouldn't have advanced equipment but could let an assistant keep a culture just for tamagotchi reasons, and maybe get a common organ if they spend long enough on it
+Organ Sets - multiple organs with the same theme, possibly adds new effects if you have multiple of a set
+Make multiple organs have similar/same requirements so it's possible for the organ generating process to fill out its rarity list (3/2/1 common/uncommon/rare)
 Fluffy(?)
 
 Trait effects:
