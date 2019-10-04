@@ -365,7 +365,7 @@
 
 
 /datum/reagents/proc/handle_reactions()//HERE EDIT HERE THE MAIN REACTION
-	if(fermiIsReacting == TRUE)
+	if(fermiIsReacting)
 		return
 
 	if(reagents_holder_flags & NO_REACT)
@@ -464,7 +464,7 @@
 			//Temperature plays into a larger role too.
 			var/datum/chemical_reaction/C = selected_reaction
 
-			if (C.FermiChem == TRUE && !continue_reacting)
+			if (C.FermiChem && !continue_reacting)
 				if (chem_temp > C.ExplodeTemp) //This is first to ensure explosions.
 					var/datum/chemical_reaction/fermi/Ferm = selected_reaction
 					fermiIsReacting = FALSE
@@ -477,10 +477,10 @@
 				for(var/P in selected_reaction.results)
 					targetVol = cached_results[P]*multiplier
 
-				if( (chem_temp <= C.ExplodeTemp) && (chem_temp >= C.OptimalTempMin))
+				if( (chem_temp <= C.ExplodeTemp) && (chem_temp >= C.OptimalTempMin) )
 					if( (pH >= (C.OptimalpHMin - C.ReactpHLim)) && (pH <= (C.OptimalpHMax + C.ReactpHLim)) )//To prevent pointless reactions
 
-						if (fermiIsReacting == TRUE)
+						if (fermiIsReacting)
 							return 0
 						else
 							START_PROCESSING(SSprocessing, src)
@@ -496,7 +496,7 @@
 
 		//Standard reaction mechanics:
 			else
-				if (C.FermiChem == TRUE)//Just to make sure, should only proc when grenades are combining.
+				if (C.FermiChem)//Just to make sure, should only proc when grenades are combining.
 					if (chem_temp > C.ExplodeTemp) //To allow fermigrenades
 						var/datum/chemical_reaction/fermi/Ferm = selected_reaction
 						fermiIsReacting = FALSE
@@ -558,10 +558,10 @@
 	for(var/P in cached_results)
 		targetVol = cached_results[P]*multiplier
 
-	if (fermiIsReacting == FALSE)
+	if (!fermiIsReacting)
 		CRASH("Fermi has refused to stop reacting even though we asked her nicely.")
 
-	if (chem_temp > C.OptimalTempMin && fermiIsReacting == TRUE)//To prevent pointless reactions
+	if (chem_temp > C.OptimalTempMin && fermiIsReacting)//To prevent pointless reactions
 		if( (pH >= (C.OptimalpHMin - C.ReactpHLim)) && (pH <= (C.OptimalpHMax + C.ReactpHLim)) )
 			if (reactedVol < targetVol)
 				reactedVol = fermiReact(fermiReactID, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
@@ -646,7 +646,6 @@
 	//ONLY WORKS FOR ONE PRODUCT AT THE MOMENT
 	//Calculate how much product to make and how much reactant to remove factors..
 	for(var/P in cached_results)
-		//stepChemAmmount = CLAMP(((deltaT * multiplier), 0, ((targetVol - reactedVol)/cached_results[P]))  //used to have multipler, now it does
 		stepChemAmmount = (multiplier*cached_results[P])
 		if (stepChemAmmount >= C.RateUpLim)
 			stepChemAmmount = (C.RateUpLim)
@@ -822,7 +821,7 @@
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
 
-	if (D.id == "water" && no_react == FALSE && !istype(my_atom, /obj/item/reagent_containers/food)) //Do like an otter, add acid to water, but also don't blow up botany.
+	if (D.id == "water" && no_react && !istype(my_atom, /obj/item/reagent_containers/food)) //Do like an otter, add acid to water, but also don't blow up botany.
 		if (pH <= 2)
 			SSblackbox.record_feedback("tally", "fermi_chem", 1, "water-acid explosions")
 			var/datum/effect_system/smoke_spread/chem/s = new
@@ -865,7 +864,7 @@
 	chem_temp = thermal_energy / (specific_heat * new_total)
 
 	//cacluate reagent based pH shift.
-	if(ignore_pH == TRUE)
+	if(ignore_pH)
 		pH = ((cached_pH * cached_total)+(other_pH * amount))/(cached_total + amount)//should be right
 	else
 		pH = ((cached_pH * cached_total)+(D.pH * amount))/(cached_total + amount)//should be right
@@ -885,7 +884,7 @@
 			if(my_atom)
 				my_atom.on_reagent_change(ADD_REAGENT)
 			if(isliving(my_atom))
-				if(R.OnMobMergeCheck == TRUE)//Forces on_mob_add proc when a chem is merged
+				if(R.OnMobMergeCheck)//Forces on_mob_add proc when a chem is merged
 					R.on_mob_add(my_atom, amount)
 				//else
 				//	R.on_merge(data, amount, my_atom, other_purity)
@@ -906,7 +905,7 @@
 	if(data)
 		R.data = data
 		R.on_new(data)
-	if(R.addProc == TRUE)//Allows on new without data overhead.
+	if(R.addProc)//Allows on new without data overhead.
 		R.on_new(pH) //Add more as desired.
 
 
@@ -946,7 +945,7 @@
 			if((total_volume - amount) <= 0)//Because this can result in 0, I don't want it to crash.
 				pH = 7
 			//In practice this is really confusing and players feel like it randomly melts their beakers, but I'm not sure how else to handle it. We'll see how it goes and I can remove this if it confuses people.
-			else if (ignore_pH == FALSE)
+			else if (ignore_pH)
 				//if (((pH > R.pH) && (pH <= 7)) || ((pH < R.pH) && (pH >= 7)))
 				pH = (((pH - R.pH) / total_volume) * amount) + pH
 			if(istype(my_atom, /obj/item/reagent_containers/))
