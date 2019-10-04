@@ -821,7 +821,7 @@
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
 
-	if (D.id == "water" && no_react && !istype(my_atom, /obj/item/reagent_containers/food)) //Do like an otter, add acid to water, but also don't blow up botany.
+	if (D.id == "water" && !no_react && !istype(my_atom, /obj/item/reagent_containers/food)) //Do like an otter, add acid to water, but also don't blow up botany.
 		if (pH <= 2)
 			SSblackbox.record_feedback("tally", "fermi_chem", 1, "water-acid explosions")
 			var/datum/effect_system/smoke_spread/chem/s = new
@@ -864,7 +864,7 @@
 	chem_temp = thermal_energy / (specific_heat * new_total)
 
 	//cacluate reagent based pH shift.
-	if(ignore_pH)
+	if(!ignore_pH)
 		pH = ((cached_pH * cached_total)+(other_pH * amount))/(cached_total + amount)//should be right
 	else
 		pH = ((cached_pH * cached_total)+(D.pH * amount))/(cached_total + amount)//should be right
