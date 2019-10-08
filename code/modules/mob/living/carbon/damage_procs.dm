@@ -146,6 +146,7 @@
 	var/obj/item/organ/O = getorganslot(slot)
 	if(O)
 		return O.damage
+	return FALSE
 
 /mob/living/carbon/proc/adjustAllOrganLoss(amount, maximum)
 	for(var/obj/item/organ/O in internal_organs)
