@@ -66,6 +66,7 @@
 	var/grinded = ""
 	var/blob = ""
 	var/impure = ""
+	var/carpet = ""
 
 	//Chem_dispencer
 	var/list/dispensable_reagents = list(
@@ -235,6 +236,10 @@
 			else if(istype(R, /datum/reagent/impure))
 				impure += generate_chemwiki_line(R, X, processCR)
 
+			else if(istype(R, /datum/reagent/carpet))
+				carpet += generate_chemwiki_line(R, X, processCR)
+
+
 			else
 				remainder += generate_chemwiki_line(R, X, processCR)
 
@@ -247,7 +252,7 @@
 	to_chat(usr, "finished chems")
 
 	var/wholeString = ("\n# DISPENCEABLE REAGENTS\n\n[prefix][basic]\n\n# COMPONENT REAGENTS\n\n[prefix][upgraded]\n\n# GROUND REAGENTS\n\n[prefix][grinded]\n")
-	wholeString += ("\n# MEDICINE:\n\n[prefix][medicine]\n\n# TOXIN:\n\n[prefix][toxin]\n\n# DRUGS\n\n[prefix][drug]\n\n# FERMI\n\nThese chems lie on the cutting edge of chemical technology, and as such are not recommended for beginners!\n\n[prefix][fermi]\n\n# IMPURE REAGENTS\n\n[prefix][impure]\n\n# GENERAL REAGENTS\n\n[prefix][remainder]\n\n# DISPENCEABLE SOFT DRINKS\n\n[prefix][drinks]\n\n# DISPENCEABLE HARD DRINKS\n\n[prefix][alco]\n\n# CONSUMABLE\n\n[prefix][consumable]\n\n# PLANTS\n\n[prefix][plant]\n\n# URANIUM\n\n[prefix][uranium]\n\n# COLOURS\n\n[prefix][colours]\n\n# RACE MUTATIONS\n\n[prefix][muta]\n\n\n# BLOB REAGENTS\n\n[prefix][blob]\n")
+	wholeString += ("\n# MEDICINE:\n\n[prefix][medicine]\n\n# TOXIN:\n\n[prefix][toxin]\n\n# DRUGS\n\n[prefix][drug]\n\n# FERMI\n\nThese chems lie on the cutting edge of chemical technology, and as such are not recommended for beginners!\n\n[prefix][fermi]\n\n# IMPURE REAGENTS\n\n[prefix][impure]\n\n# GENERAL REAGENTS\n\n[prefix][remainder]\n\n# DISPENCEABLE SOFT DRINKS\n\n[prefix][drinks]\n\n# DISPENCEABLE HARD DRINKS\n\n[prefix][alco]\n\n# CONSUMABLE\n\n[prefix][consumable]\n\n# PLANTS\n\n[prefix][plant]\n\n# URANIUM\n\n[prefix][uranium]\n\n# COLOURS\n\n[prefix][colours]\n\n# Carpet\n\n[prefix][carpet]\n\n# RACE MUTATIONS\n\n[prefix][muta]\n\n\n# BLOB REAGENTS\n\n[prefix][blob]\n")
 
 	prefix = "|Name | Reagents | Reaction vars | Description |\n|---|---|---|----------|\n"
 	var/CRparse = ""
@@ -338,14 +343,12 @@
 
 	if(R.inverse_chem && R.impure_chem != "fermiTox")
 		R3 = GLOB.chemical_reagents_list[R.inverse_chem]
-		outstring += "<li>Inverse chem:<a href=\"#[R3.name]\">[R3.name]</a></li> [(R3.inverse_chem_val?"<li>Inverse purity: [R3.inverse_chem_val]</li>":"")] "
+		outstring += "<li>Inverse chem:<a href=\"#[R3.name]\">[R3.name]</a></li> [(R3.inverse_chem_val?"<li>Invert purity level: [R3.inverse_chem_val]</li>":"")] "
 
 	if(CR)
 		if(CR.required_container)
-			/*var/obj/item/I
-			I = istype(I, CR.required_container) if you can work out how to get this to work, by all means.
-			outstring += "<li>Required container: [I.name]</li>"*/
-			outstring += "<li>Required container: [CR.required_container]</li>"
+			var/obj/item/I = new CR.required_container
+			outstring += "<li>Required container: [I.name]</li>"
 
 	outstring += "</ul>|\n"
 	return outstring
@@ -376,7 +379,8 @@
 	if(CR.is_cold_recipe)
 		outstring += "<li>Cold: Yes</li>"
 	if(CR.required_container)
-		outstring += "<li>Required container: [CR.required_container]</li>"
+		var/obj/item/I = new CR.required_container
+		outstring += "<li>Required container: [I.name]</li>"
 	if(CR.mob_react)
 		outstring += "<li>Can react in mob: Yes</li>"
 

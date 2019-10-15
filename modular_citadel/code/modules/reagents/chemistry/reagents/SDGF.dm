@@ -38,7 +38,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 //Clone serum #chemClone
 /datum/reagent/fermi/SDGF //vars, mostly only care about keeping track if there's a player in the clone or not.
-	name = "synthetic-derived growth factor"
+	name = "Synthetic-derived growth factor"
 	id = "SDGF"
 	description = "A rapidly diving mass of Embryonic stem cells. These cells are missing a nucleus and quickly replicate a host’s DNA before growing to form an almost perfect clone of the host. In some cases neural replication takes longer, though the underlying reason underneath has yet to be determined."
 	color = "#a502e0" // rgb: 96, 0, 255
@@ -279,7 +279,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 //Unobtainable, used in clone spawn.
 /datum/reagent/fermi/SDGFheal
-	name = "synthetic-derived healing factor"
+	name = "Synthetic-derived healing factor"
 	id = "SDGFheal"
 	description = "Leftover SDGF is transferred into the resulting clone, which quickly heals up the stresses from suddenly splitting. Restores blood, nutrition, and repaires brain and clone damage quickly. Only obtainable from using excess SDGF, and only enters the cloned body."
 	metabolization_rate = 1
@@ -308,7 +308,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 //Fail state of SDGF
 /datum/reagent/impure/SDZF
-	name = "synthetic-derived zombie factor"
+	name = "Synthetic-derived zombie factor"
 	id = "SDZF"
 	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. Emulates normal synthetic-derived growth factor, but produces a hostile zombie at the end of it."
 	color = "#a502e0" // rgb: 96, 0, 255
