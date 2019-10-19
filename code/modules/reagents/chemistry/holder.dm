@@ -643,7 +643,7 @@
 	purity = (deltapH)//set purity equal to pH offset
 
 	//Then adjust purity of result with reagent purity.
-	purity *= reactant_purity(C)
+	purity *= reactant_purity(C, cached_required_reagents)
 
 	var/removeChemAmmount //remove factor
 	var/addChemAmmount //add factor
@@ -678,7 +678,7 @@
 		TotalStep += addChemAmmount//for multiple products
 		//Above should reduce yeild based on holder purity.
 		//Purity Check
-		for(var/datum/reagent/R in my_atom.reagents.reagent_list)
+		for(var/datum/reagent/R in reagent_list)
 			if(P == R.id)
 				if (R.purity < C.PurityMin)//If purity is below the min, blow it up.
 					fermiIsReacting = FALSE
@@ -711,12 +711,12 @@
 	return (reactedVol)
 
 //Currently calculates it irrespective of required reagents at the start
-/datum/reagents/proc/reactant_purity(var/datum/chemical_reaction/C, holder)
+/datum/reagents/proc/reactant_purity(var/datum/chemical_reaction/C, cached_required_reagents)
 	var/list/cached_reagents = reagent_list
 	var/i = 0
 	var/cachedPurity
-	for(var/datum/reagent/R in my_atom.reagents.reagent_list)
-		if (R in cached_reagents)
+	for(var/datum/reagent/R in reagent_list)
+		if (R in cached_required_reagents)
 			cachedPurity += R.purity
 			i++
 	if(!i)//I've never seen it get here with 0, but in case
