@@ -505,3 +505,31 @@
 	held_sausage.name = "[target.name]-roasted [held_sausage.name]"
 	held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
 	update_icon()
+
+/obj/item/umbrella
+	name = "umbrella"
+	desc = "To keep the rain off you. Use with caution on windy days."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	icon_state = "umbrella_closed"
+	slot_flags = SLOT_BELT
+	force = 5
+	throwforce = 5
+	w_class = WEIGHT_CLASS_SMALL
+	var/open = FALSE
+
+/obj/item/umbrella/Initialize()
+	..()
+	color = RANDOM_COLOUR
+	update_icon()
+
+/obj/item/umbrella/attack_self()
+	toggle_umbrella()
+
+/obj/item/umbrella/proc/toggle_umbrella()
+	open = !open
+	icon_state = "umbrella_[open ? "open" : "closed"]"
+	item_state = icon_state
+	update_icon()
+	..()
