@@ -112,11 +112,13 @@
 
 /mob/living/simple_animal/jacq/proc/jacqrunes(message, mob/living/carbon/C) //Displays speechtext over Jacq for the user only.
 	var/atom/hearer = C
-	var/list/spans = list("spooky") 
+	var/list/spans = list("spooky")
 	new /datum/chatmessage(message, src, hearer, spans)
 
 
 /mob/living/simple_animal/jacq/proc/poof()
+	if(!active)//if disabled, don't poof
+		return
 	last_poof = world.realtime
 	var/datum/reagents/R = new/datum/reagents(100)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
